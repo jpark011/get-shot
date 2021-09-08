@@ -1,0 +1,22 @@
+{
+  "name": "getShot",
+  "description": "백신 맞고 코로나를 극복하세요!",
+  "version": "0.0.1",
+  "manifest_version": 3,
+  "permissions": ["storage", "activeTab"],
+  "action": {
+    "default_popup": "html/popup.html",
+    "default_icon": {
+      "16": "img/icon.png",
+      "32": "img/icon.png",
+      "48": "img/icon.png",
+      "128": "img/icon.png"
+    }
+  },
+  "icons": {
+    "16": "img/icon.png",
+    "32": "img/icon.png",
+    "48": "img/icon.png",
+    "128": "img/icon.png"
+  }
+}
