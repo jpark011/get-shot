@@ -1,0 +1,26 @@
+{
+  "name": "@jpark011/get-shot",
+  "version": "0.0.1",
+  "description": "💉(😷, 🦠) => 💉(😌, 💥)",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jpark011/getShot.git"
+  },
+  "keywords": [
+    "covid",
+    "covid19",
+    "vaccine",
+    "korea",
+    "reservation"
+  ],
+  "author": "Jay Park",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jpark011/getShot/issues"
+  },
+  "homepage": "https://github.com/jpark011/getShot#readme"
+}
