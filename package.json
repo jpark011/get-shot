@@ -1,10 +1,10 @@
 {
   "name": "@jpark011/get-shot",
   "version": "0.0.1",
-  "description": "💉(😷, 🦠) => 💉(😌, 💥)",
+  "description": "Chrome extension: 💉(😷, 🦠) => 💉(😌, 💥)",
   "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
@@ -22,5 +22,9 @@
   "bugs": {
     "url": "https://github.com/jpark011/getShot/issues"
   },
-  "homepage": "https://github.com/jpark011/getShot#readme"
+  "homepage": "https://github.com/jpark011/getShot#readme",
+  "devDependencies": {
+    "@types/chrome": "^0.0.157",
+    "typescript": "^4.4.2"
+  }
 }
