@@ -1,0 +1,75 @@
+.container {
+  margin: 20px 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+#status-img {
+  display: flex;
+  justify-content: center;
+}
+
+#status-img .stop {
+  animation: rotation 2s infinite ease-in-out;
+}
+
+#go-stop-btn {
+  display: flex;
+  justify-content: center;
+}
+
+.btn {
+  cursor: pointer;
+  width: 90px;
+  padding: 6px 5px;
+  display: block;
+  font-size: 18px;
+  color: white;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  line-height: 1rem;
+}
+
+.btn.start {
+  background-color: #38d9a9;
+}
+
+.btn.start:hover {
+  background-color: #2fa380;
+}
+
+.btn.stop {
+  background-color: #ff6b6b;
+}
+
+.btn.stop:hover {
+  background-color: #b44545;
+}
+
+.start {
+  display: block;
+}
+
+.stop {
+  display: none;
+}
+
+[searching] .start {
+  display: none;
+}
+
+[searching] .stop {
+  display: block;
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}

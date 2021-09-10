@@ -3,8 +3,7 @@
   "description": "백신 맞고 코로나를 극복하세요!",
   "version": "0.0.1",
   "manifest_version": 3,
-  "permissions": ["storage", "activeTab"],
-  "default_locale": "kr",
+  "permissions": ["storage", "activeTab", "geolocation"],
   "icons": {
     "16": "assets/icon.png",
     "32": "assets/icon.png",
@@ -21,7 +20,7 @@
     }
   },
   "background": {
-    "service_worker": "src/service-worker.js",
+    "service_worker": "service-worker.js",
     "type": "module"
   }
 }

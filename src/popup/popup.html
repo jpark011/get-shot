@@ -1,10 +1,20 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
   <head>
+    <meta charset="utf-8" />
     <link rel="stylesheet" href="./popup.css" />
   </head>
   <body>
-    <button id="changeColor"></button>
+    <div class="container" id="root">
+      <div id="status-img">
+        <img class="start" src="../../assets/icon.png" width="80" />
+        <img class="stop" src="../../assets/loading.svg" width="60" />
+      </div>
+      <div id="go-stop-btn">
+        <button class="btn start">예약 시작</button>
+        <button class="btn stop">예약 중지</button>
+      </div>
+    </div>
     <script src="./popup.js"></script>
   </body>
 </html>
