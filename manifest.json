@@ -4,6 +4,7 @@
   "version": "0.0.1",
   "manifest_version": 3,
   "permissions": ["storage", "activeTab", "geolocation"],
+  "host_permissions": ["*://v-search.nid.naver.com/"],
   "icons": {
     "16": "assets/icon.png",
     "32": "assets/icon.png",

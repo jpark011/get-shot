@@ -14,7 +14,7 @@ button?.addEventListener('click', () => {
 });
 
 chrome.runtime.onMessage.addListener((msg) => {
-  if (msg.cmd === 'found') {
+  if (msg.cmd === 'success') {
     stopSearching();
   }
 });

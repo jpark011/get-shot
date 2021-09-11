@@ -1,4 +1,4 @@
-import { searching, startSearch, stopSearch } from './src/search';
+import { searching, startSearch, stopSearch } from './src/search/index.js';
 
 chrome.runtime.onInstalled.addListener(() => {
   chrome.action.setIcon({

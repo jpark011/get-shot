@@ -1,4 +1,4 @@
-import { queryVaccineList } from './gql';
+import { queryVaccineList } from './gql.js';
 
 export const VACCINE_CODES = {
   화이자: 'VEN00013',

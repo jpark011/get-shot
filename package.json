@@ -4,7 +4,8 @@
   "description": "Chrome extension: 💉(😷, 🦠) => 💉(😌, 💥)",
   "main": "dist/index.js",
   "scripts": {
-    "build": "rm -rf js && tsc"
+    "prebuild": "rm -rf js dist",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",

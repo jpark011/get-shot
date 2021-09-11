@@ -2,8 +2,8 @@ import {
   getVaccineList,
   getHospitalWithVaccine,
   VACCINE_CODES,
-} from './vaccine';
-import { progress, standby, confirm } from './reservation';
+} from './vaccine.js';
+import { progress, standby, confirm, RESERVATION_URL } from './reservation.js';
 export let searching: number | null = null;
 
 export function startSearch(x: number, y: number, interval = 2000) {
@@ -35,15 +35,17 @@ async function search(x: number, y: number) {
     const success = await confirm(key);
 
     if (success) {
-      onSuccess(hospital);
+      onSuccess(key);
     }
   } catch (e) {
     console.warn(e);
   }
 }
 
-function onSuccess(hospital) {
+function onSuccess(key) {
+  chrome.runtime.sendMessage({ cmd: 'success' });
   new Audio(
     'https://freesound.org/data/previews/122/122255_1074082-lq.mp3'
   ).play();
+  chrome.tabs.create({ url: `${RESERVATION_URL}/success?key=${key}` });
 }
