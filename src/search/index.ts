@@ -4,15 +4,18 @@ import {
   VACCINE_CODES,
 } from './vaccine.js';
 import { progress, standby, confirm, RESERVATION_URL } from './reservation.js';
+
 export let searching: number | null = null;
 
 export function startSearch(x: number, y: number, interval = 2000) {
   searching = setInterval(() => search(x, y), interval);
+  chrome.storage.local.set({ searching });
 }
 
-export function stopSearch() {
+export async function stopSearch() {
   searching && clearInterval(searching);
   searching = null;
+  await chrome.storage.local.remove('searching');
 }
 
 async function search(x: number, y: number) {

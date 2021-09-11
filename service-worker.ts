@@ -24,3 +24,8 @@ chrome.runtime.onMessage.addListener((msg, _, res) => {
     res('searching stopped');
   }
 });
+
+chrome.runtime.onSuspend.addListener(async () => {
+  await stopSearch();
+  return true;
+});
