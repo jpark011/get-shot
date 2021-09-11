@@ -3,7 +3,7 @@
   "description": "백신 맞고 코로나를 극복하세요!",
   "version": "0.0.1",
   "manifest_version": 3,
-  "permissions": ["storage", "activeTab", "geolocation"],
+  "permissions": ["storage", "activeTab", "geolocation", "notifications"],
   "host_permissions": ["*://v-search.nid.naver.com/"],
   "icons": {
     "16": "assets/icon.png",

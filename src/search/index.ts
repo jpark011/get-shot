@@ -38,17 +38,9 @@ async function search(x: number, y: number) {
     const success = await confirm(key);
 
     if (success) {
-      onSuccess(key);
+      chrome.runtime.sendMessage({ cmd: 'success', key });
     }
   } catch (e) {
     console.warn(e);
   }
-}
-
-function onSuccess(key) {
-  chrome.runtime.sendMessage({ cmd: 'success' });
-  new Audio(
-    'https://freesound.org/data/previews/122/122255_1074082-lq.mp3'
-  ).play();
-  chrome.tabs.create({ url: `${RESERVATION_URL}/success?key=${key}` });
 }

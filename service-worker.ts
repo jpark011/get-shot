@@ -9,19 +9,22 @@ chrome.runtime.onInstalled.addListener(() => {
 });
 
 chrome.runtime.onMessage.addListener((msg, _, res) => {
-  if (msg.cmd === 'start') {
-    if (searching) {
-      res('searching already started');
-      return;
-    }
+  switch (msg.cmd) {
+    case 'start':
+      if (searching) {
+        return 'searching already started';
+      }
 
-    const { x, y } = msg;
+      const { x, y } = msg;
 
-    startSearch(x, y);
-    res('searching started');
-  } else {
-    stopSearch();
-    res('searching stopped');
+      startSearch(x, y);
+
+      return 'searching started';
+    case 'stop':
+      stopSearch();
+
+      return 'searching stopped';
+    default:
   }
 });
 
