@@ -5,7 +5,8 @@
   "main": "dist/index.js",
   "scripts": {
     "prebuild": "rm -rf js dist",
-    "build": "tsc"
+    "build": "tsc",
+    "package": "zip get-shot assets/* src/**/*.{js,css,html} manifest.json service-worker.js"
   },
   "repository": {
     "type": "git",

@@ -1,4 +1,4 @@
-# getShot 코로나 백신 예약 시스템: COVID-19 Vaccine Macro
+# getShot 코로나 백신 예약 시스템 [COVID-19 Vaccine Macro]
 
 [NAVER 우리동네 백신알림](https://v-search.nid.naver.com/home) 를 활용한 자동 예약 크롬 확장자입니다.
 
