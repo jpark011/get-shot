@@ -8,6 +8,12 @@ navigator.geolocation.getCurrentPosition(({ coords }) => {
   y = coords.latitude;
 });
 
+chrome.storage.local.get('searching', ({ searching }) => {
+  if (isFinite(searching)) {
+    startSearching();
+  }
+});
+
 button?.addEventListener('click', () => {
   const searching = root?.getAttribute('searching') !== null;
 
@@ -23,12 +29,22 @@ chrome.runtime.onMessage.addListener((msg) => {
 
 function stopSearching() {
   chrome.runtime.sendMessage({ cmd: 'stop' }, () => {
+    chrome.action.setIcon({
+      path: {
+        '64': `../../assets/icon-gray.png`,
+      },
+    });
     root?.removeAttribute('searching');
   });
 }
 
 function startSearching() {
   chrome.runtime.sendMessage({ cmd: 'start', x, y }, () => {
+    chrome.action.setIcon({
+      path: {
+        '64': `../../assets/icon.png`,
+      },
+    });
     root?.setAttribute('searching', '');
   });
 }

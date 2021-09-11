@@ -3,7 +3,7 @@ import { searching, startSearch, stopSearch } from './src/search/index.js';
 chrome.runtime.onInstalled.addListener(() => {
   chrome.action.setIcon({
     path: {
-      '16': `../../assets/icon-gray.png`,
+      '64': `../../assets/icon-gray.png`,
     },
   });
 });
