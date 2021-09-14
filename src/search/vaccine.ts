@@ -1,5 +1,29 @@
 import { queryVaccineList } from './gql.js';
 
+export interface Vaccine {
+  quantity: number;
+  quantityStatus: string;
+  vaccineType: string;
+}
+
+export interface VaccineQuantity {
+  totalQuantity: number;
+  startTime: string;
+  endTime: string;
+  vaccineOrganizationCode: string;
+  list: Vaccine[];
+}
+
+export interface Hospital {
+  id: string;
+  name: string;
+  phone: string;
+  roadAddress: string;
+  x: string;
+  y: string;
+  vaccineQuantity: VaccineQuantity;
+}
+
 export const VACCINE_CODES = {
   화이자: 'VEN00013',
   모더나: 'VEN00014',
@@ -11,7 +35,10 @@ export const VACCINE_CODES = {
   스푸트니크V: 'VEN00020',
 };
 
-export async function getVaccineList(x: string, y: string) {
+export async function getVaccineList(
+  x: string,
+  y: string
+): Promise<Hospital[]> {
   return await fetch('https://api.place.naver.com/graphql', {
     method: 'POST',
     headers: {
@@ -43,22 +70,36 @@ export async function getVaccineList(x: string, y: string) {
     .then((json) => json.data.rests.businesses.items);
 }
 
-export function getHospitalWithVaccine(vaccineList: any[]) {
-  if (!Array.isArray(vaccineList)) {
-    return null;
-  }
-
-  const hospital = vaccineList
+export function getHospitalsWithVaccine(vaccineList: Hospital[]) {
+  return vaccineList
     .filter(({ vaccineQuantity: { list } }) =>
       list
         .filter(
           ({ vaccineType, quantity }) =>
-            quantity > 0 &&
-            (vaccineType === '화이자' || vaccineType === '모더나')
+            quantity > 0 && vaccineType === '화이자' // || vaccineType === '모더나')
         )
         .shift()
     )
-    .shift();
+    .filter(activeHospitals);
+}
 
-  return hospital || null;
+const idleHospitals: Hospital[] = [];
+
+function activeHospitals(hospital: Hospital) {
+  const idle = idleHospitals.find(({ id }) => hospital.id === id);
+
+  if (!idle) {
+    idleHospitals.push(hospital);
+    return true;
+  }
+
+  if (
+    idle.vaccineQuantity.totalQuantity !==
+    hospital.vaccineQuantity.totalQuantity
+  ) {
+    idle.vaccineQuantity.totalQuantity = hospital.vaccineQuantity.totalQuantity;
+    return true;
+  }
+
+  return false;
 }

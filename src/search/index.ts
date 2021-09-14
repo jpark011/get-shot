@@ -1,9 +1,9 @@
 import {
   getVaccineList,
-  getHospitalWithVaccine,
+  getHospitalsWithVaccine,
   VACCINE_CODES,
 } from './vaccine.js';
-import { progress, standby, confirm, RESERVATION_URL } from './reservation.js';
+import { progress, standby, confirm } from './reservation.js';
 
 export let searching: number | null = null;
 
@@ -21,24 +21,34 @@ export async function stopSearch() {
 async function search(x: number, y: number) {
   try {
     const vaccineList = await getVaccineList(`${x}`, `${y}`);
-    const hospital = getHospitalWithVaccine(vaccineList);
+    const hospitals = getHospitalsWithVaccine(vaccineList);
 
-    if (!hospital) {
+    if (hospitals.length <= 0) {
       return;
     }
 
-    const key = await standby(
-      hospital.vaccineQuantity.vaccineOrganizationCode,
-      hospital.id
-    );
-    const vaccine = hospital.vaccineQuantity.list.shift();
-    const code = VACCINE_CODES[vaccine.vaccineType];
+    for (const hospital of hospitals) {
+      const key = await standby(
+        hospital.vaccineQuantity.vaccineOrganizationCode,
+        hospital.id
+      );
+      const vaccine = hospital.vaccineQuantity.list.find(
+        ({ vaccineType }) => vaccineType === '화이자'
+      );
 
-    await progress(key, code);
-    const success = await confirm(key);
+      if (!key || !vaccine) {
+        return;
+      }
 
-    if (success) {
-      chrome.runtime.sendMessage({ cmd: 'success', key });
+      const code = VACCINE_CODES[vaccine.vaccineType];
+
+      await progress(key, code);
+      const success = await confirm(key);
+
+      if (success) {
+        chrome.runtime.sendMessage({ cmd: 'success', key });
+        break;
+      }
     }
   } catch (e) {
     console.warn(e);
