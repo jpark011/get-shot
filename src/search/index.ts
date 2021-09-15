@@ -23,7 +23,8 @@ export async function stopSearch() {
 async function search(x: number, y: number) {
   try {
     if (searchQueue.length > 0) {
-      tryReservation(searchQueue.shift() as Hospital);
+      await tryReservation(searchQueue.shift() as Hospital);
+      return;
     }
 
     const vaccineList = await getVaccineList(`${x}`, `${y}`);
