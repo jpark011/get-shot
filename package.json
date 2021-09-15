@@ -1,6 +1,6 @@
 {
   "name": "@jpark011/get-shot",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Chrome extension: 💉(😷, 🦠) => 💉(😌, 💥)",
   "main": "dist/index.js",
   "scripts": {
