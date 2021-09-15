@@ -2,10 +2,12 @@ import {
   getVaccineList,
   getHospitalsWithVaccine,
   VACCINE_CODES,
+  Hospital,
 } from './vaccine.js';
 import { progress, standby, confirm } from './reservation.js';
 
 export let searching: number | null = null;
+const searchQueue: Hospital[] = [];
 
 export function startSearch(x: number, y: number, interval = 2000) {
   searching = setInterval(() => search(x, y), interval);
@@ -20,6 +22,10 @@ export async function stopSearch() {
 
 async function search(x: number, y: number) {
   try {
+    if (searchQueue.length > 0) {
+      tryReservation(searchQueue.shift() as Hospital);
+    }
+
     const vaccineList = await getVaccineList(`${x}`, `${y}`);
     const hospitals = getHospitalsWithVaccine(vaccineList);
 
@@ -27,28 +33,36 @@ async function search(x: number, y: number) {
       return;
     }
 
-    for (const hospital of hospitals) {
-      const key = await standby(
-        hospital.vaccineQuantity.vaccineOrganizationCode,
-        hospital.id
-      );
-      const vaccine = hospital.vaccineQuantity.list.find(
-        ({ vaccineType }) => vaccineType === '화이자'
-      );
+    const hospital = hospitals.shift() as Hospital;
 
-      if (!key || !vaccine) {
-        return;
-      }
+    searchQueue.push(...hospitals);
+    await tryReservation(hospital);
+  } catch (e) {
+    console.warn(e);
+  }
+}
 
-      const code = VACCINE_CODES[vaccine.vaccineType];
+async function tryReservation(hospital: Hospital) {
+  try {
+    const key = await standby(
+      hospital.vaccineQuantity.vaccineOrganizationCode,
+      hospital.id
+    );
+    const vaccine = hospital.vaccineQuantity.list.find(
+      ({ vaccineType }) => vaccineType === '화이자'
+    );
 
-      await progress(key, code);
-      const success = await confirm(key);
+    if (!key || !vaccine) {
+      return;
+    }
 
-      if (success) {
-        chrome.runtime.sendMessage({ cmd: 'success', key });
-        break;
-      }
+    const code = VACCINE_CODES[vaccine.vaccineType];
+
+    await progress(key, code);
+    const success = await confirm(key);
+
+    if (success) {
+      chrome.runtime.sendMessage({ cmd: 'success', key });
     }
   } catch (e) {
     console.warn(e);
